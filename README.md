@@ -13,15 +13,21 @@
 SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.kaggle.com/ruizgara/socofing/home)。
 
 ## 三、模型
-本次实验使用Siamese网络架构，构造正负样本对进行训练，将样本嵌入(embedding)到一个度量空间，使得相同语义(同一人的同一手指)的样本靠近，不同语义的样本远离。
+本次实验使用Siamese网络架构，构造正负样本对进行训练，将样本嵌入(embedding)到一个度量空间，使得相同语义(同一人的同一手指指纹)的样本靠近，不同语义的样本远离。
+
+![siamese-network](./resources/siamese_network.jpg)
+
+
 
 ## 四、损失函数
 损失函数采取了LeCun于2006年提出的对比损失函数(Contrastive Loss Function)<sup>[2]</sup>，该损失函数的基本原则是：1. 近似样本之间的距离越小越好。2. 不相似样本之间的距离如果小于m，则相互排斥使其距离接近m。该损失函数的作用可以形象地用以下弹簧图表示：
 
 ![contrastive-loss-function](resources/contrastive_loss_function.png)
 
+网络具体架构如下图所示，是一个类似VGG的4层卷积池化层加4层全连接层的神经网络。其中每次卷积都采用3 x 3卷积核，s = 1,p = 2。卷积层都采用CBR结构(conv + BN + ReLU)，
+池化操作为平均池化(k = 2, s = 2, p = 0)，最终通过全连接层将数据嵌入到一个30维的向量空间中。
 
-
+![network-structure](resources/network_structure.png)
 
 ## 五、结果
 
@@ -40,7 +46,8 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 
 ![TN](result/3.jpg)
 
-可以看到这些被认为是正样本(同一人同一手指)的指纹对在空间分布上具有较高的一致性，说明Siamese网络提取到了指纹空间分布的信息，此外可以发现这些指纹对中至少有一方是包含噪声的，说明模型的稳定性还有待提高。
+可以看到这些被认为是正样本(同一人同一手指)的指纹对在空间分布上具有较高的一致性，说明Siamese网络提取到了指纹空间分布的信息，此外可以发现这些错分的指纹对中至少有一方是包含噪声的，
+说明模型可能被噪声干扰，稳定性有待提高。
 
 ## 六、参考资料
 [1] Shehu Y I , Ruiz-Garcia A , Palade V , et al. Sokoto Coventry Fingerprint Dataset[J]. 2018.
