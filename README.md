@@ -31,7 +31,12 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 <p align="center"><img  src="./resources/network_structure.png" width="75%" height="75%"></p>
 
 ## 四、损失函数
-损失函数采取了LeCun于2006年提出的对比损失函数(Contrastive Loss Function)<sup>[2]</sup>，该损失函数的基本原则是：1. 近似样本之间的距离越小越好。2. 不相似样本之间的距离如果小于m，则相互排斥使其距离接近m。该损失函数的作用可以形象地用以下弹簧图表示：
+损失函数采取了LeCun于2006年提出的对比损失函数(Contrastive Loss Function)<sup>[2]</sup>，该损失函数的设计思想是：
+
+* 近似样本之间的距离越小越好。
+* 不相似样本之间的距离如果小于m，则相互排斥使其距离接近m。
+
+可以用下图形象地表示该损失函数的作用效果。
 
 
 
