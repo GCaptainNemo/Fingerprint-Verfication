@@ -19,7 +19,7 @@
 
 首先对指纹图像进行归一化，然后进行脊线方向场计算，进行Gabor滤波增强，二值化得到二值图像，最终效果如下图所示：
 
-<p alilgn="center"><img src="./resources/bw.png" width=30%></p>
+<p align="center"><img src="./resources/bw.png" width=30%></p>
 
 <h6 align='center'>原图与二值化图像对比</h6>
 
@@ -27,6 +27,6 @@
 
 接着从二值化图像中提取Harris角点，并计算Harris角点的ORB特征描述子，并进行特征匹配。最后使用距离判别条件——若匹配特征描述子之间的平均距离小于一个阈值则认为匹配成功，否则则认为失败。
 
-<p alilgn="center"><img src="./resources/match.png" width=30%></p>
+<p align="center"><img src="./resources/match.png" width=30%></p>
 
 <h6 align='center'>特征点匹配</h6>
