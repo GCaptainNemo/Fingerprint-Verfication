@@ -27,11 +27,6 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 
 ![contrastive-loss-function](resources/contrastive_loss_function.png)
 
-网络具体架构如下图所示，是一个类似VGG的4层卷积池化层加4层全连接层的神经网络。其中每次卷积都采用3 x 3卷积核，s = 1,p = 2。卷积层都采用CBR结构(conv + BN + ReLU)，
-池化操作为平均池化(k = 2, s = 2, p = 0)，最终通过全连接层将数据嵌入到一个30维的向量空间中。
-
-![network-structure](resources/network_structure.png)
-
 ## 五、结果
 
 用测试数据(9982正样本对，15964个负样本对)对模型进行评估，得到的混淆矩阵如下所示：
