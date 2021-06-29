@@ -64,9 +64,12 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 
 
 
-可以看到这些被认为是正样本(同一人同一手指)的指纹对在空间分布上具有较高的一致性，说明Siamese网络提取到了指纹空间分布的信息，此外可以发现这些错分的指纹对中至少有一方是包含噪声的，说明模型可能被噪声干扰，稳定性有待提高。
+可以看到这些错分为正样本的指纹对在空间分布上具有较高的一致性，说明Siamese网络提取到了指纹空间分布的信息，此外可以发现这些错分的指纹对中至少有一方是包含噪声的，说明模型可能被噪声干扰，稳定性可以通过数据增强技术进一步提高。
+
+**补充**：本次实验还使用了基于传统模式识别的指纹识别算法，可以在[traditonal-method.md](./traditional-method.md)中查看
 
 ## 六、参考资料
 [1] Shehu Y I , Ruiz-Garcia A , Palade V , et al. Sokoto Coventry Fingerprint Dataset[J]. 2018.
 
 [2] [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf), 2006, Raia Hadsell, Sumit Chopra, Yann LeCun
+
