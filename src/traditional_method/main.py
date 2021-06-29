@@ -3,10 +3,13 @@ import os
 import sys
 import numpy
 import matplotlib.pyplot as plt
-from src.traditional_method.image_enhance import image_enhance
+import src.traditional_method.image_enhance as image_enhance
 from skimage.morphology import skeletonize, thin
 import numpy as np
 import pickle
+
+address_lst = os.listdir("../../data/orb_pkl/")
+name_set = set(address_lst)
 
 
 def removedot(invertThin):
@@ -82,7 +85,9 @@ def load_pkl():
 	with open("predicted.pkl", "rb+") as f:
 		lst = pickle.load(f)
 	print(lst)
-
+	with open("dist_lst.pkl", "rb+") as f:
+		dst_lst = pickle.load(f)
+	print(dst_lst)
 
 def main(txt_address):
 	predicted_lst = []
@@ -90,13 +95,16 @@ def main(txt_address):
 		samples_lst = f.readlines()
 		total_num = 0
 		true_num = 0
+		dist_lst = []
 		for i, samples in enumerate(samples_lst):
-			# if i > 3:
+			# if i > 10:
 			# 	break
 			lst = samples.strip().split("    ")
 			name_1 = lst[0]
 			name_2 = lst[1]
-			if match(name_1, name_2):
+			is_match, avg = match(name_1, name_2)
+			dist_lst.append(avg)
+			if is_match:
 				# pos samples
 				predicted_lst.append(0)
 				if int(lst[2]) == 0:
@@ -109,25 +117,38 @@ def main(txt_address):
 			print("total:true = ", total_num, true_num)
 	with open("predicted.pkl", "wb+") as f:
 		pickle.dump(predicted_lst, f)
+	with open("dist_lst.pkl", "wb+") as f:
+		pickle.dump(dist_lst, f)
 
 
 def match(image_name1, image_name2):
-	# image_name = sys.argv[1]
-	img1 = cv2.imread(image_name1, cv2.IMREAD_GRAYSCALE)
-	img1 = cv2.resize(img1, dsize=(245, 372))
+	name1 = image_name1.split("/")[-1].split(".")[0] + ".pkl"
+	if name1 not in name_set:
+		name_set.add(name1)
+		img1 = cv2.imread(image_name1, cv2.IMREAD_GRAYSCALE)
+		img1 = cv2.resize(img1, dsize=(245, 372))
+		kp1, des1 = get_descriptors(img1)
+		with open("../../data/orb_pkl/{}".format(name1), "wb+") as f:
+			pickle.dump(des1, f)
+	else:
+		with open("../../data/orb_pkl/{}".format(name1), "rb+") as f:
+			des1 = pickle.load(f)
+	name2 = image_name2.split("/")[-1].split(".")[0] + ".pkl"
 
-	kp1, des1 = get_descriptors(img1)
-	
-	# image_name = sys.argv[2]
-
-	img2 = cv2.imread(image_name2, cv2.IMREAD_GRAYSCALE)
-	img2 = cv2.resize(img2, dsize=(245, 372))
-	kp2, des2 = get_descriptors(img2)
-	
+	if name2 not in name_set:
+		name_set.add(name2)
+		img2 = cv2.imread(image_name2, cv2.IMREAD_GRAYSCALE)
+		img2 = cv2.resize(img2, dsize=(245, 372))
+		kp2, des2 = get_descriptors(img2)
+		with open("../../data/orb_pkl/{}".format(name2), "wb+") as f:
+			pickle.dump(des2, f)
+	else:
+		with open("../../data/orb_pkl/{}".format(name2), "rb+") as f:
+			des2 = pickle.load(f)
 	# Matching between descriptors
 	# Brute force match
 	bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-	matches = sorted(bf.match(des1, des2), key=lambda match:match.distance)
+	matches = sorted(bf.match(des1, des2), key=lambda match: match.distance)
 	# Plot keypoints
 	# img4 = cv2.drawKeypoints(img1, kp1, outImage=None)
 	# img5 = cv2.drawKeypoints(img2, kp2, outImage=None)
@@ -147,12 +168,13 @@ def match(image_name1, image_name2):
 	score_threshold = 33
 	#print(score)
 	#print(len(matches))
-	if score / len(matches) < score_threshold:
+	avg = score / len(matches)
+	if avg < score_threshold:
 		# print("Fingerprint matches.")
-		return True
+		return True, avg
 	else:
 		# print("Fingerprint does not match.")
-		return False
+		return False, avg
 
 
 if __name__ == "__main__":

@@ -56,11 +56,11 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 
 <p align="center"><img src='result/0.jpg' width="50%"></p>
 
-<p align="center"><img src='result/1.jpg', width=50%></p>
+<p align="center"><img src='result/1.jpg' width=50%></p>
 
-<p align="center"><img src='result/2.jpg', width=50%></p>
+<p align="center"><img src='result/2.jpg' width=50%></p>
 
-<p align="center"><img src='result/3.jpg', width=50%></p>
+<p align="center"><img src='result/3.jpg' width=50%></p>
 
 
 

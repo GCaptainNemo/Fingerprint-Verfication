@@ -47,7 +47,7 @@ def load_pkl(pkl_dir):
 def construct_pos_neg_samples(train_num):
     with open("../../data/files_dump.pkl", "rb") as f:
         files_name_lst = pickle.load(f)
-    with open("../pos_samples.txt", "w+") as txt:
+    with open("../traditional_method/pos_samples.txt", "w+") as txt:
         # pos samples
         pos_num = 0
         for i in range(train_num):
@@ -76,7 +76,7 @@ def construct_pos_neg_samples_test():
         files_name_lst = pickle.load(f)
     files_name_lst_test = files_name_lst[5000:6000]
 
-    with open("../pos_samples.txt", "w+") as txt:
+    with open("../traditional_method/pos_samples.txt", "w+") as txt:
         # pos samples
         pos_num = 0
         total_num = 0
