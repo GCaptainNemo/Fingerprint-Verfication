@@ -17,7 +17,10 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 
 ![siamese-network](./resources/siamese_network.jpg)
 
+网络具体架构如下图所示，由4层卷积池化层加4层全连接层构成。其中每次卷积都采用3 x 3卷积核，s = 1, p = 2。卷积层都采用CBR结构(Conv + BN + ReLU)，
+池化操作为平均池化(k = 2, s = 2, p = 0)，最终通过全连接层将数据嵌入到一个30维的向量空间中。
 
+![network-structure](./resources/network_structure.png)
 
 ## 四、损失函数
 损失函数采取了LeCun于2006年提出的对比损失函数(Contrastive Loss Function)<sup>[2]</sup>，该损失函数的基本原则是：1. 近似样本之间的距离越小越好。2. 不相似样本之间的距离如果小于m，则相互排斥使其距离接近m。该损失函数的作用可以形象地用以下弹簧图表示：
