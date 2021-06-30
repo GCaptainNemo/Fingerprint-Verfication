@@ -30,3 +30,15 @@
 <p align="center"><img src="./resources/match.png" width=30%></p>
 
 <h6 align='center'>特征点匹配</h6>
+
+## 三、结果
+
+用测试数据(9982正样本对，15964个负样本对)对模型进行评估，得到PR曲线如下所示。可以看到随着查全率(recall)的增长，查准率(precision)维持在1附近，当查全率接近1附近时查准率降到75%。说明用Harris角点的ORB特征描述子可以较好的区别正负样本，正负样本之间只有少量的交叠。
+
+<p align="center"><img src="./result/pr-curve_tradition.png" width="50%"></p>
+
+取匹配点描述子平均Hamming距离为2.78作为正样本和负样本之间的判别边界(平均距离小于2.78为正样本，否则为负样本)，得到混淆矩阵如下所示
+
+<p align="center"><img src="./result/confusion_matrix_tradition.png" width="50%"></p>
+
+其中Accuracy = 79.04%, Precision = 99.98%, Recall = 45.53%,  F1=62.57%。

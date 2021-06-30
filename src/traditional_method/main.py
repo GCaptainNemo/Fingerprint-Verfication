@@ -8,6 +8,7 @@ from skimage.morphology import skeletonize, thin
 import numpy as np
 import pickle
 
+
 address_lst = os.listdir("../../data/orb_pkl/")
 name_set = set(address_lst)
 
@@ -81,13 +82,16 @@ def get_descriptors(img):
 	return keypoints, des
 
 
-def load_pkl():
+def load_predicted_pkl():
 	with open("predicted.pkl", "rb+") as f:
 		lst = pickle.load(f)
 	print(lst)
+
+def load_dist_lst_pkl():
 	with open("dist_lst.pkl", "rb+") as f:
 		dst_lst = pickle.load(f)
 	print(dst_lst)
+
 
 def main(txt_address):
 	predicted_lst = []
@@ -165,7 +169,7 @@ def match(image_name1, image_name2):
 	score = 0
 	for match in matches:
 		score += match.distance
-	score_threshold = 33
+	score_threshold = 2.78
 	#print(score)
 	#print(len(matches))
 	avg = score / len(matches)

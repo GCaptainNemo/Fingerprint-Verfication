@@ -46,13 +46,17 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 
 ## 五、结果
 
-用测试数据(9982正样本对，15964个负样本对)对模型进行评估，得到的混淆矩阵如下所示：
+用测试数据(9982正样本对，15964个负样本对)对模型进行评估，得到PR曲线如下所示。可以看到查准率(Precision)在不同查全率(Recall)上都是100%。说明正样本对和负样本对距离之间存在一个界(margin)，正负样本之间不存在交叠的情况。当取距离大于1.148为负样本、距离小于1.148为负样本时可以完美地分离测试集正负样本(precision=100%, recall=100%)。
+
+<p align="center"><img src="./result/pr-curve.png" width=45%></p>
+
+取阈值为1.99模型对应混淆矩阵如下所示：
 
 <p align="center"><img  src="result/confusion_mat.png" width="45%" height="45%"></p>
 
 
 
-其中Precision = 99.87%， Recall=100%, Accuracy = 99.87%。以下是将负样本对错分成正样本对的32组样本：
+其中Precision = 99.87%， Recall=100%, Accuracy = 99.87%。以下是将负样本对错分成正样本对的32个样本对：
 
 <p align="center"><img src='result/0.jpg' width="50%"></p>
 
@@ -62,7 +66,7 @@ SOCO-Fing数据集 [https://www.kaggle.com/ruizgara/socofing/home](https://www.k
 
 <p align="center"><img src='result/3.jpg' width=50%></p>
 
-
+<h6 align="center">FP样本对</h6>
 
 可以看到这些错分为正样本的指纹对在空间分布上具有较高的一致性，说明Siamese网络提取到了指纹空间分布的信息，此外可以发现这些错分的指纹对中至少有一方是包含噪声的，说明模型可能被噪声干扰，稳定性可以通过数据增强技术进一步提高。
 
